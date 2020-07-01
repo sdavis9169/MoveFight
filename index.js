@@ -1,7 +1,7 @@
 const fetchData = async searchTerm => {
-  const response = await axios.get(`http://www.omdbapi.com/`, {
+  const response = await axios.get('http://www.omdbapi.com/', {
     params: {
-      apikey: `b195b133`,
+      apikey: 'd9835cc5',
       s: searchTerm
     }
   });
@@ -15,13 +15,13 @@ const fetchData = async searchTerm => {
 
 const root = document.querySelector('.autocomplete');
 root.innerHTML = `
-<label><b>Search For a Movie</b></label>
-<input class="input" />
-<div class="dropdown">
-<div class="dropdown-menu">
-<div class="dropdown-content results" ></div>
-</div>
-</div>
+  <label><b>Search For a Movie</b></label>
+  <input class="input" />
+  <div class="dropdown">
+    <div class="dropdown-menu">
+      <div class="dropdown-content results"></div>
+    </div>
+  </div>
 `;
 
 const input = document.querySelector('input');
@@ -46,10 +46,9 @@ const onInput = async event => {
     option.innerHTML = `
       <img src="${imgSrc}" />
       ${movie.Title}
-      `;
-
-    option.addEventListener(`click`, () => {
-      dropdown.classList.remove(`is-active`);
+    `;
+    option.addEventListener('click', () => {
+      dropdown.classList.remove('is-active');
       input.value = movie.Title;
       onMovieSelect(movie);
     });
@@ -57,7 +56,6 @@ const onInput = async event => {
     resultsWrapper.appendChild(option);
   }
 };
-
 input.addEventListener('input', debounce(onInput, 500));
 
 document.addEventListener('click', event => {
@@ -69,7 +67,7 @@ document.addEventListener('click', event => {
 const onMovieSelect = async movie => {
   const response = await axios.get('http://www.omdbapi.com/', {
     params: {
-      apikey: `b195b133`,
+      apikey: 'd9835cc5',
       i: movie.imdbID
     }
   });
@@ -80,21 +78,18 @@ const onMovieSelect = async movie => {
 const movieTemplate = movieDetail => {
   return `
     <article class="media">
-    <figure class="media-left">
-    <p class="image">
-    <img src="${movieDetail.Poster} />
-    </p>
-    </figure>
-    <div>
-    <div>
-    <h1>${movieDetail.Title}</h1>
-    <h4>${movieDetail.Genre}</h4>
-    <p>${movieDetail.Plot}</p>
-    </div>
-    </div>
+      <figure class="media-left">
+        <p class="image">
+          <img src="${movieDetail.Poster}" />
+        </p>
+      </figure>
+      <div class="media-content">
+        <div class="content">
+          <h1>${movieDetail.Title}</h1>
+          <h4>${movieDetail.Genre}</h4>
+          <p>${movieDetail.Plot}</p>
+        </div>
+      </div>
     </article>
-    <article class="notification is-primary">
-    <p class="title">${movieDetail.Awards}</p>
-    </article>
-    `;
+  `;
 };
